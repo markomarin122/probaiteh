@@ -95,22 +95,22 @@ const ProfilePage = () => {
 
     return (
         <div className="max-w-4xl mx-auto px-4 py-12">
-            <div className="bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100 flex flex-col md:flex-row">
+            <div className="bg-white rounded border border-gray-200 shadow-sm overflow-hidden flex flex-col md:flex-row">
                 {/* Sidebar Info */}
                 <div className="md:w-1/3 bg-blue-600 p-10 text-white flex flex-col items-center justify-center text-center">
-                    <div className="w-32 h-32 bg-blue-500 rounded-full flex items-center justify-center text-5xl font-black mb-4 shadow-inner border-4 border-blue-400">
+                    <div className="w-24 h-24 bg-blue-500 rounded flex items-center justify-center text-4xl font-bold mb-4 border-2 border-blue-400">
                         {ime.charAt(0)}
                     </div>
-                    <h2 className="text-2xl font-black">{ime}</h2>
-                    <p className="opacity-75 text-sm">{email}</p>
+                    <h2 className="text-xl font-bold">{ime}</h2>
+                    <p className="opacity-90 text-xs font-bold uppercase mt-1">{email}</p>
                 </div>
 
                 {/* Form Section */}
-                <div className="md:w-2/3 p-10 md:p-16">
-                    <h1 className="text-3xl font-black text-gray-900 mb-8">Podešavanja Profila</h1>
+                <div className="md:w-2/3 p-10">
+                    <h1 className="text-2xl font-bold text-gray-900 mb-6">Podešavanja Profila</h1>
 
                     {message.text && (
-                        <div className={`mb-6 p-4 rounded-xl border font-bold text-sm ${message.type === 'success' ? 'bg-green-50 border-green-200 text-green-700' : 'bg-red-50 border-red-200 text-red-700'
+                        <div className={`mb-6 p-4 rounded border font-bold text-[10px] uppercase ${message.type === 'success' ? 'bg-green-50 border-green-200 text-green-700' : 'bg-red-50 border-red-200 text-red-700'
                             }`}>
                             {message.text}
                         </div>
@@ -140,32 +140,31 @@ const ProfilePage = () => {
                         />
 
                         <div className="pt-4">
-                            <Button
+                            <button
                                 type="submit"
-                                variant="primary"
-                                className="w-full h-12 text-lg font-bold shadow-lg shadow-blue-100"
+                                className="w-full bg-blue-600 text-white h-10 rounded font-bold hover:bg-blue-700 uppercase text-xs"
                             >
                                 Sačuvaj izmene
-                            </Button>
+                            </button>
                         </div>
 
                         <div className="pt-8 border-t border-gray-100 mt-8">
-                            <h3 className="text-xl font-black text-gray-800 mb-4">Moja Dokumenta</h3>
-                            <p className="text-sm text-gray-500 mb-6">Priložite vozačku dozvolu kako biste ubrzali proces potvrde rezervacija.</p>
+                            <h3 className="text-lg font-bold text-gray-800 mb-2">Moja Dokumenta</h3>
+                            <p className="text-[10px] text-gray-500 font-bold uppercase mb-6">Priložite vozačku dozvolu.</p>
 
                             <div className="space-y-4 mb-6">
                                 {documents.map(doc => (
-                                    <div key={doc.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-xl border border-gray-200">
+                                    <div key={doc.id} className="flex items-center justify-between p-3 bg-gray-50 rounded border border-gray-200">
                                         <div className="flex items-center">
                                             <span className="text-xl mr-3">📄</span>
                                             <div>
-                                                <p className="text-[10px] font-bold uppercase text-gray-400">{doc.tip.replace('_', ' ')}</p>
-                                                <p className="text-sm font-semibold">{doc.putanja.split('/').pop()}</p>
+                                                <p className="text-[9px] font-bold uppercase text-gray-600">{doc.tip.replace('_', ' ')}</p>
+                                                <p className="text-xs font-bold">{doc.putanja.split('/').pop()}</p>
                                             </div>
                                         </div>
-                                        <span className={`text-[10px] font-black uppercase px-2 py-1 rounded ${doc.status === 'APPROVED' ? 'bg-green-100 text-green-700' :
-                                                doc.status === 'REJECTED' ? 'bg-red-100 text-red-700' :
-                                                    'bg-yellow-100 text-yellow-700'
+                                        <span className={`text-[9px] font-bold uppercase px-2 py-1 rounded ${doc.status === 'APPROVED' ? 'bg-green-100 text-green-700' :
+                                            doc.status === 'REJECTED' ? 'bg-red-100 text-red-700' :
+                                                'bg-yellow-100 text-yellow-700'
                                             }`}>
                                             {doc.status === 'APPROVED' ? 'Odobreno' : doc.status === 'REJECTED' ? 'Odbijeno' : 'Na čekanju'}
                                         </span>

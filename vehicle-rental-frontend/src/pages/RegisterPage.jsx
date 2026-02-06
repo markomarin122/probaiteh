@@ -38,40 +38,34 @@ const RegisterPage = () => {
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-50 py-20 px-4">
-            <div className="max-w-5xl w-full bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col md:flex-row border border-gray-100">
+            <div className="max-w-4xl w-full bg-white rounded border border-gray-200 shadow-sm overflow-hidden flex flex-col md:flex-row">
 
                 {/* Info Side */}
                 <div className="md:w-1/2 bg-blue-600 p-12 text-white flex flex-col justify-center">
-                    <h2 className="text-4xl font-black mb-6 tracking-tight">PRIDRUŽI SE <br /> NAŠOJ MREŽI.</h2>
-                    <p className="text-blue-100 text-lg font-medium mb-8 leading-relaxed">
-                        Registracijom dobijate pristup ekskluzivnim vozilima, bržem procesu rezervacije i personalizovanoj podršci 24/7.
+                    <h2 className="text-3xl font-bold mb-6">PRIDRUŽI SE</h2>
+                    <p className="text-blue-100 font-medium mb-8">
+                        Registracijom dobijate pristup vozilima i bržem procesu rezervacije.
                     </p>
-                    <div className="space-y-4">
+                    <div className="space-y-4 text-sm font-bold uppercase">
                         <div className="flex items-center space-x-3">
-                            <span className="bg-blue-500 p-2 rounded-lg text-xl">🚗</span>
-                            <span className="font-bold">Preko 50 premium vozila</span>
+                            <span>🚗 Preko 50 vozila</span>
                         </div>
                         <div className="flex items-center space-x-3">
-                            <span className="bg-blue-500 p-2 rounded-lg text-xl">🛡️</span>
-                            <span className="font-bold">Potpuno osiguranje uključeno</span>
-                        </div>
-                        <div className="flex items-center space-x-3">
-                            <span className="bg-blue-500 p-2 rounded-lg text-xl">🎁</span>
-                            <span className="font-bold">Popusti za stalne klijente</span>
+                            <span>🛡️ Osiguranje uključeno</span>
                         </div>
                     </div>
                 </div>
 
                 {/* Form Side */}
-                <div className="md:w-1/2 p-12 md:p-16">
-                    <div className="mb-10">
-                        <h3 className="text-3xl font-black text-gray-900 mb-2">Napravi Nalog</h3>
-                        <p className="text-gray-400 font-bold uppercase text-xs tracking-widest">Započni svoje putovanje danas</p>
+                <div className="md:w-1/2 p-10">
+                    <div className="mb-8">
+                        <h3 className="text-2xl font-bold text-gray-900">Napravi Nalog</h3>
+                        <p className="text-gray-500 font-bold uppercase text-[10px]">Započni svoje putovanje danas</p>
                     </div>
 
                     <form className="space-y-6" onSubmit={handleRegister}>
                         {error && (
-                            <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-xl text-sm font-bold">
+                            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded text-[10px] font-bold uppercase">
                                 {error}
                             </div>
                         )}
@@ -120,22 +114,21 @@ const RegisterPage = () => {
                         </div>
 
                         <div className="pt-4">
-                            <Button
+                            <button
                                 type="submit"
-                                variant="primary"
-                                className="w-full h-14 text-lg font-black shadow-xl shadow-blue-100"
+                                className="w-full bg-blue-600 text-white h-12 rounded font-bold hover:bg-blue-700 uppercase text-xs"
                                 disabled={loading}
                             >
                                 {loading ? 'Kreiranje...' : 'Registruj se'}
-                            </Button>
+                            </button>
                         </div>
                     </form>
 
-                    <div className="mt-10 text-center">
-                        <p className="text-sm text-gray-500 font-medium">
+                    <div className="mt-8 text-center text-xs">
+                        <p className="text-gray-500 font-medium">
                             Već imaš nalog?{' '}
-                            <a href="/login" className="font-black text-blue-600 hover:text-blue-700 underline decoration-blue-200">
-                                Prijavi se ovde
+                            <a href="/login" className="font-bold text-blue-600 hover:text-blue-700 underline">
+                                Prijavi se
                             </a>
                         </p>
                     </div>

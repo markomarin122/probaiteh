@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Zalba;
+use App\Models\Aktivnost;
 use Illuminate\Http\Request;
 
 class ComplaintController extends Controller
@@ -43,6 +44,13 @@ class ComplaintController extends Controller
             'status' => 'PODNETA',
         ]);
 
+        Aktivnost::create([
+            'korisnikId' => $request->user()->id,
+            'akcija' => 'COMPLAINT_SUBMITTED',
+            'detalji' => "Podneta nova žalba: {$complaint->naslov}",
+            'tip' => 'info'
+        ]);
+
         return response()->json([
             'message' => 'Žalba uspešno podneta',
             'complaint' => $complaint,
@@ -64,6 +72,13 @@ class ComplaintController extends Controller
         $complaint->update([
             'status' => $request->status,
             'resenje' => $request->resenje,
+        ]);
+
+        Aktivnost::create([
+            'korisnikId' => auth()->user()->id,
+            'akcija' => 'COMPLAINT_RESOLVED',
+            'detalji' => "Govor na žalbu #{$complaint->id} je poslat (Status: {$complaint->status})",
+            'tip' => 'success'
         ]);
 
         return response()->json([

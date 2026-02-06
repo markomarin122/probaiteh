@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\DamageReport;
-use App\Models\Reservation;
+use App\Models\Rezervacija;
+use App\Models\Aktivnost;
 use Illuminate\Http\Request;
 
 class DamageReportController extends Controller
@@ -33,6 +34,13 @@ class DamageReportController extends Controller
             'rezervacijaId' => $request->rezervacijaId,
             'opisStete' => $request->opisStete,
             'dodatniTrosak' => $request->dodatniTrosak ?? 0,
+        ]);
+
+        Aktivnost::create([
+            'korisnikId' => auth()->user()->id,
+            'akcija' => 'DAMAGE_REPORT_CREATED',
+            'detalji' => "Prijavljena šteta za rezervaciju #{$report->rezervacijaId}: {$report->opisStete}",
+            'tip' => 'error'
         ]);
 
         return response()->json([

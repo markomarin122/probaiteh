@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Dokument;
+use App\Models\Aktivnost;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -46,6 +47,13 @@ class DocumentController extends Controller
                 'putanja' => 'storage/' . $path,
                 'verifikovan' => false,
                 'status' => 'PENDING',
+            ]);
+
+            Aktivnost::create([
+                'korisnikId' => $request->user()->id,
+                'akcija' => 'DOCUMENT_UPLOADED',
+                'detalji' => "Otpremljen novi dokument: {$document->naziv} ({$document->tip})",
+                'tip' => 'info'
             ]);
 
             return response()->json([
@@ -113,6 +121,13 @@ class DocumentController extends Controller
             'verifikovan' => true,
         ]);
 
+        Aktivnost::create([
+            'korisnikId' => auth()->id(),
+            'akcija' => 'DOCUMENT_APPROVED',
+            'detalji' => "Odobren dokument #{$document->id} za korisnika ID: {$document->korisnikId}",
+            'tip' => 'success'
+        ]);
+
         return response()->json([
             'message' => 'Dokument je odobren',
             'document' => $document,
@@ -129,6 +144,13 @@ class DocumentController extends Controller
         $document->update([
             'status' => 'REJECTED',
             'verifikovan' => false,
+        ]);
+
+        Aktivnost::create([
+            'korisnikId' => auth()->id(),
+            'akcija' => 'DOCUMENT_REJECTED',
+            'detalji' => "Odbijen dokument #{$document->id} za korisnika ID: {$document->korisnikId}",
+            'tip' => 'warning'
         ]);
 
         return response()->json([

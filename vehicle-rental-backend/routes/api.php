@@ -67,5 +67,6 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::put('/users/{id}', [UserController::class, 'update']);
         Route::delete('/users/{id}', [UserController::class, 'destroy']);
         Route::get('/stats', [\App\Http\Controllers\Api\StatsController::class, 'index']);
+        Route::get('/logs', [\App\Http\Controllers\Api\ActivityLogController::class, 'index']);
     });
 });

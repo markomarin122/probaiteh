@@ -25,10 +25,10 @@ const VehiclesPage = () => {
     if (loading) return <div className="p-20 text-center font-black text-blue-600 animate-pulse">Učitavanje flote...</div>;
 
     return (
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="max-w-7xl mx-auto px-4 py-12">
             <div className="mb-12">
-                <h1 className="text-5xl font-black text-gray-900 mb-4 tracking-tighter">Naša Kompletna Flota</h1>
-                <p className="text-xl text-gray-500 max-w-2xl font-medium">Istražite širok spektar vozila spremnih za vaše sledeće putovanje. Od gradskih automobila do luksuznih limuzina.</p>
+                <h1 className="text-3xl font-bold text-gray-900 mb-2">Naša Flota</h1>
+                <p className="text-gray-600 font-medium">Istražite širok spektar vozila spremnih za vaše sledeće putovanje.</p>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -41,8 +41,8 @@ const VehiclesPage = () => {
                             image={vehicle.image_url || 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&q=80&w=800'}
                             footer={
                                 <div className="flex justify-between items-center w-full">
-                                    <span className="font-black text-2xl text-blue-600">
-                                        {vehicle.cenaPoDanu} € <span className="text-xs text-gray-400 font-bold uppercase">/ dan</span>
+                                    <span className="font-bold text-xl text-blue-600">
+                                        {vehicle.cenaPoDanu} € <span className="text-[10px] text-gray-500 font-bold uppercase">/ dan</span>
                                     </span>
                                     <Button variant="primary" onClick={() => (window.location.href = `/vozila/${vehicle.id}`)}>
                                         Detalji
@@ -52,23 +52,23 @@ const VehiclesPage = () => {
                         >
                             <div className="grid grid-cols-3 gap-2 mt-4 py-4 border-t border-gray-100">
                                 <div className="text-center">
-                                    <p className="text-[10px] font-black uppercase text-gray-400">Gorivo</p>
+                                    <p className="text-[9px] font-bold uppercase text-gray-500">Gorivo</p>
                                     <p className="text-xs font-bold text-gray-800">{vehicle.gorivo}</p>
                                 </div>
                                 <div className="text-center border-x border-gray-100">
-                                    <p className="text-[10px] font-black uppercase text-gray-400">Pogon</p>
+                                    <p className="text-[9px] font-bold uppercase text-gray-500">Pogon</p>
                                     <p className="text-xs font-bold text-gray-800">{vehicle.menjac}</p>
                                 </div>
                                 <div className="text-center">
-                                    <p className="text-[10px] font-black uppercase text-gray-400">Putnici</p>
+                                    <p className="text-[9px] font-bold uppercase text-gray-500">Putnici</p>
                                     <p className="text-xs font-bold text-gray-800">{vehicle.sedista}</p>
                                 </div>
                             </div>
                         </Card>
                     ))
                 ) : (
-                    <div className="col-span-full border-4 border-dashed border-gray-100 rounded-3xl p-20 text-center">
-                        <p className="text-2xl font-black text-gray-300">Trenutno nema dostupnih vozila.</p>
+                    <div className="col-span-full border border-gray-200 rounded p-20 text-center bg-white">
+                        <p className="text-xl font-bold text-gray-400">Trenutno nema dostupnih vozila.</p>
                     </div>
                 )}
             </div>

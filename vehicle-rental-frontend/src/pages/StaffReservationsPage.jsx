@@ -88,19 +88,17 @@ const StaffReservationsPage = () => {
         <div className="max-w-7xl mx-auto px-4 py-12">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 gap-6">
                 <div>
-                    <h1 className="text-4xl font-black text-gray-900 tracking-tight">Operativni Rad</h1>
-                    <p className="text-gray-500 font-bold uppercase text-xs tracking-widest mt-2 flex items-center">
-                        <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
+                    <h1 className="text-3xl font-bold text-gray-900">Operativni Rad</h1>
+                    <p className="text-black font-bold uppercase text-[10px] mt-2">
                         Upravljanje vozilima i rezervacijama
                     </p>
                 </div>
                 <div className="flex items-center gap-4">
                     <button
                         onClick={() => navigate('/dokumenti')}
-                        className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-6 py-3 rounded-2xl text-sm font-black uppercase tracking-widest shadow-xl shadow-purple-100 hover:shadow-2xl hover:scale-105 transition-all flex items-center gap-2"
+                        className="bg-gray-100 text-gray-800 px-6 py-2 rounded font-bold text-sm border border-gray-300 hover:bg-gray-200 transition-all flex items-center gap-2"
                     >
-                        <span className="text-lg">📄</span>
-                        Dokumenti
+                        📄 Dokumenti
                     </button>
                     {message.text && (
                         <div className={`px-6 py-3 rounded-2xl font-bold text-sm shadow-xl transition-all ${message.type === 'success' ? 'bg-green-50 text-green-700 border border-green-200' : 'bg-red-50 text-red-700 border border-red-200'
@@ -111,29 +109,26 @@ const StaffReservationsPage = () => {
                 </div>
             </div>
 
-            <div className="bg-white rounded-3xl shadow-2xl border border-gray-100 overflow-hidden">
+            <div className="bg-white border border-gray-200 rounded shadow-sm overflow-hidden">
                 <div className="overflow-x-auto">
                     <table className="w-full text-left border-collapse">
                         <thead>
                             <tr className="bg-gray-50 border-b border-gray-100">
-                                <th className="px-6 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400">Vozilo / Klijent</th>
-                                <th className="px-6 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400">Lokacija / Vreme</th>
-                                <th className="px-6 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400">Tehnički podaci</th>
-                                <th className="px-6 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400">Status</th>
-                                <th className="px-6 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400 text-right">Akcije</th>
+                                <th className="px-6 py-6 text-[10px] font-black uppercase tracking-widest text-black">Vozilo / Klijent</th>
+                                <th className="px-6 py-6 text-[10px] font-black uppercase tracking-widest text-black">Lokacija / Vreme</th>
+                                <th className="px-6 py-6 text-[10px] font-black uppercase tracking-widest text-black">Tehnički podaci</th>
+                                <th className="px-6 py-6 text-[10px] font-black uppercase tracking-widest text-black">Status</th>
+                                <th className="px-6 py-6 text-[10px] font-black uppercase tracking-widest text-black text-right">Akcije</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-50">
                             {reservations.map(res => (
                                 <tr key={res.id} className="hover:bg-blue-50/30 transition-colors">
-                                    <td className="px-6 py-5">
+                                    <td className="px-6 py-4">
                                         <div className="flex items-center">
-                                            <div className="w-10 h-10 bg-gray-100 rounded-xl flex items-center justify-center mr-3 text-xl">
-                                                🚗
-                                            </div>
                                             <div>
-                                                <p className="font-black text-gray-900 leading-none mb-1">{res.vozilo?.marka} {res.vozilo?.model}</p>
-                                                <p className="text-xs font-bold text-blue-500 uppercase tracking-tighter">{res.korisnik?.ime}</p>
+                                                <p className="font-bold text-gray-900 leading-none mb-1">{res.vozilo?.marka} {res.vozilo?.model}</p>
+                                                <p className="text-[10px] font-bold text-blue-600 uppercase italic">{res.korisnik?.ime}</p>
                                             </div>
                                         </div>
                                     </td>
@@ -164,8 +159,8 @@ const StaffReservationsPage = () => {
                                             <span className="text-[10px] font-bold text-gray-300 italic">Podaci nisu uneti</span>
                                         )}
                                     </td>
-                                    <td className="px-6 py-5">
-                                        <span className={`text-[9px] font-black uppercase px-2.5 py-1 rounded-lg tracking-widest ${res.status === 'CEKA' ? 'bg-yellow-100 text-yellow-700' :
+                                    <td className="px-6 py-4">
+                                        <span className={`text-[9px] font-bold uppercase px-2 py-0.5 rounded ${res.status === 'CEKA' ? 'bg-yellow-100 text-yellow-700' :
                                             res.status === 'POTVRDJENA' ? 'bg-blue-100 text-blue-700' :
                                                 res.status === 'PREUZETO' ? 'bg-indigo-100 text-indigo-700' :
                                                     res.status === 'VRACENO' || res.status === 'ZAVRSENA' ? 'bg-green-100 text-green-700' :
@@ -175,14 +170,16 @@ const StaffReservationsPage = () => {
                                         </span>
                                     </td>
                                     <td className="px-6 py-5 text-right space-x-2">
-                                        {res.status === 'CEKA' && (
+                                        {(res.status === 'CEKA' || res.status === 'POTVRDJENA') && (
                                             <>
-                                                <button
-                                                    onClick={() => handleUpdateStatus(res.id, 'POTVRDJENA')}
-                                                    className="bg-blue-600 text-white px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-lg shadow-blue-100 hover:bg-blue-700 transition-all"
-                                                >
-                                                    Potvrdi
-                                                </button>
+                                                {res.status === 'CEKA' && (
+                                                    <button
+                                                        onClick={() => handleUpdateStatus(res.id, 'POTVRDJENA')}
+                                                        className="bg-blue-600 text-white px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-lg shadow-blue-100 hover:bg-blue-700 transition-all"
+                                                    >
+                                                        Potvrdi
+                                                    </button>
+                                                )}
                                                 <button
                                                     onClick={() => setEditingReservation(res)}
                                                     className="bg-gray-100 text-gray-600 px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest border border-gray-200 hover:bg-gray-200 transition-all ml-2"
@@ -223,14 +220,14 @@ const StaffReservationsPage = () => {
                 </div>
             </div>
 
-            {/* Modal za operativne podatke i završetak */}
+            {/* Modal - Uprošćeno */}
             {activeModal && (
-                <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-                    <div className="bg-white rounded-3xl p-10 max-w-md w-full shadow-2xl border border-gray-100 max-h-[90vh] overflow-y-auto">
-                        <h2 className="text-2xl font-black text-gray-900 mb-2">
+                <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+                    <div className="bg-white rounded p-8 max-w-md w-full shadow-lg border border-gray-200">
+                        <h2 className="text-xl font-bold text-gray-900 mb-2">
                             {activeModal.type === 'ZAVRSENA' ? 'Završetak Najma' : 'Registracija stanja'}
                         </h2>
-                        <p className="text-gray-500 text-sm font-bold mb-8 uppercase tracking-widest">
+                        <p className="text-black text-xs font-bold mb-8 uppercase">
                             {activeModal.type === 'ZAVRSENA' ? 'Unos završnih parametara i štete' : `Registracija: ${activeModal.type}`}
                         </p>
 

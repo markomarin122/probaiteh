@@ -150,30 +150,30 @@ const UserManagementPage = () => {
         <div className="max-w-7xl mx-auto px-4 py-12">
             <div className="flex justify-between items-end mb-10">
                 <div>
-                    <h1 className="text-4xl font-black text-gray-900 mb-2">Upravljanje Korisnicima</h1>
-                    <p className="text-gray-400 font-bold uppercase text-xs tracking-widest">Pregled i administracija naloga</p>
+                    <h1 className="text-3xl font-bold text-gray-900 mb-2">Upravljanje Korisnicima</h1>
+                    <p className="text-black font-bold uppercase text-[10px]">Pregled i administracija nivoa pristupa</p>
                 </div>
-                <Button onClick={() => handleOpenModal()} className="shadow-lg shadow-blue-200">
+                <Button onClick={() => handleOpenModal()} className="shadow-sm border border-gray-200">
                     + Novi Korisnik
                 </Button>
             </div>
 
-            {/* Filters */}
-            <div className="bg-white p-6 rounded-[2rem] shadow-sm border border-gray-100 mb-8 flex flex-wrap gap-4 items-center">
+            {/* Filters - Uprošćeno */}
+            <div className="bg-white p-4 rounded border border-gray-200 shadow-sm mb-8 flex flex-wrap gap-4 items-center">
                 <div className="flex-grow">
                     <Input
                         placeholder="Pretraga po imenu ili email-u..."
                         value={filter}
                         onChange={(e) => setFilter(e.target.value)}
-                        className="bg-gray-50 border-gray-100"
+                        className="bg-gray-50"
                     />
                 </div>
-                <div className="flex bg-gray-100 p-1.5 rounded-xl">
+                <div className="flex bg-gray-100 p-1 rounded">
                     {['ALL', 'KLIJENT', 'SLUZBENIK', 'ADMINISTRATOR'].map(role => (
                         <button
                             key={role}
                             onClick={() => setRoleFilter(role)}
-                            className={`px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all ${roleFilter === role ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-400 hover:text-gray-600'
+                            className={`px-3 py-1.5 rounded text-[10px] font-bold uppercase transition-all ${roleFilter === role ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'
                                 }`}
                         >
                             {role === 'ALL' ? 'Svi' : role}
@@ -182,42 +182,42 @@ const UserManagementPage = () => {
                 </div>
             </div>
 
-            {/* Users List */}
+            {/* Users List - Kartice */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {filteredUsers.map(u => (
-                    <div key={u.id} className="bg-white p-8 rounded-[2.5rem] border border-gray-100 shadow-sm hover:shadow-xl transition-all group">
-                        <div className="flex justify-between items-start mb-6">
-                            <div className={`w-12 h-12 rounded-2xl flex items-center justify-center text-xl font-black ${u.uloga === 'ADMINISTRATOR' ? 'bg-purple-100 text-purple-600' :
-                                u.uloga === 'SLUZBENIK' ? 'bg-blue-100 text-blue-600' : 'bg-gray-100 text-gray-500'
+                    <div key={u.id} className="bg-white p-6 rounded border border-gray-200 shadow-sm hover:border-blue-200 transition-colors group">
+                        <div className="flex justify-between items-start mb-4">
+                            <div className={`w-10 h-10 rounded flex items-center justify-center text-lg font-bold ${u.uloga === 'ADMINISTRATOR' ? 'bg-purple-100 text-purple-600' :
+                                u.uloga === 'SLUZBENIK' ? 'bg-blue-100 text-blue-600' : 'bg-gray-100 text-gray-700'
                                 }`}>
                                 {u.ime.charAt(0)}
                             </div>
-                            <span className={`px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest ${u.uloga === 'ADMINISTRATOR' ? 'bg-purple-50 text-purple-600' :
+                            <span className={`px-2 py-0.5 rounded text-[9px] font-bold uppercase ${u.uloga === 'ADMINISTRATOR' ? 'bg-purple-50 text-purple-600' :
                                 u.uloga === 'SLUZBENIK' ? 'bg-blue-50 text-blue-600' : 'bg-green-50 text-green-600'
                                 }`}>
                                 {u.uloga}
                             </span>
                         </div>
 
-                        <h3 className="text-xl font-black text-gray-900 mb-1">{u.ime}</h3>
-                        <p className="text-gray-400 text-xs font-bold mb-4">{u.email}</p>
+                        <h3 className="text-lg font-bold text-gray-900 mb-1">{u.ime}</h3>
+                        <p className="text-gray-500 text-xs font-medium mb-4">{u.email}</p>
 
-                        <div className="space-y-2 mb-6">
-                            <div className="flex items-center text-xs text-gray-500">
-                                <span className="w-6 opacity-50">📱</span> {u.telefon || 'Nema telefona'}
+                        <div className="space-y-1 mb-6">
+                            <div className="flex items-center text-xs text-black">
+                                <span className="w-5">📱</span> {u.telefon || 'Nema telf.'}
                             </div>
                             {u.filijalaId && (
-                                <div className="flex items-center text-xs text-gray-500">
-                                    <span className="w-6 opacity-50">🏢</span> Filijala #{u.filijalaId}
+                                <div className="flex items-center text-xs text-black">
+                                    <span className="w-5">🏢</span> Filijala #{u.filijalaId}
                                 </div>
                             )}
                         </div>
 
-                        <div className="flex gap-2 pt-4 border-t border-gray-50 opacity-0 group-hover:opacity-100 transition-opacity">
-                            <button onClick={() => handleOpenModal(u)} className="flex-1 py-2 bg-blue-50 text-blue-600 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-blue-100">
+                        <div className="flex gap-2 pt-4 border-t border-gray-100">
+                            <button onClick={() => handleOpenModal(u)} className="flex-1 py-1.5 bg-gray-50 text-blue-600 rounded text-[10px] font-bold uppercase border border-blue-100 hover:bg-blue-50">
                                 Izmeni
                             </button>
-                            <button onClick={() => handleDelete(u.id)} className="flex-1 py-2 bg-red-50 text-red-600 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-red-100">
+                            <button onClick={() => handleDelete(u.id)} className="flex-1 py-1.5 bg-gray-50 text-red-600 rounded text-[10px] font-bold uppercase border border-red-100 hover:bg-red-50">
                                 Deaktiviraj
                             </button>
                         </div>
@@ -225,11 +225,11 @@ const UserManagementPage = () => {
                 ))}
             </div>
 
-            {/* Modal */}
+            {/* Modal - Uprošćeno */}
             {isModalOpen && (
-                <div className="fixed inset-0 bg-gray-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-                    <div className="bg-white rounded-[2.5rem] p-10 max-w-lg w-full max-h-[90vh] overflow-y-auto shadow-2xl">
-                        <h2 className="text-2xl font-black text-gray-900 mb-6">{editingUser ? 'Izmena Korisnika' : 'Novi Korisnik'}</h2>
+                <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+                    <div className="bg-white rounded p-8 max-w-lg w-full max-h-[90vh] overflow-y-auto shadow-lg border border-gray-200">
+                        <h2 className="text-2xl font-bold text-gray-900 mb-6">{editingUser ? 'Izmena Korisnika' : 'Novi Korisnik'}</h2>
                         <form onSubmit={handleSubmit} className="space-y-4">
                             <Input label="Ime i Prezime" value={formData.ime} onChange={e => setFormData({ ...formData, ime: e.target.value })} required />
                             <Input label="Email" type="email" value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} required />

@@ -80,17 +80,16 @@ const VehicleManagementPage = () => {
         <div className="max-w-7xl mx-auto px-4 py-16">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-16 gap-6">
                 <div>
-                    <h1 className="text-5xl font-black text-gray-900 tracking-tighter">Upravljanje Flotom</h1>
-                    <p className="text-gray-500 font-bold uppercase text-xs tracking-[0.2em] mt-3 flex items-center">
-                        <span className="w-3 h-3 bg-blue-600 rounded-full mr-3 animate-ping"></span>
+                    <h1 className="text-3xl font-bold text-gray-900">Upravljanje Flotom</h1>
+                    <p className="text-gray-500 font-bold uppercase text-[10px] mt-2">
                         Admin panel za vozila
                     </p>
                 </div>
                 <button
                     onClick={() => { setEditingVehicle(null); setFormData(initialForm); setIsModalOpen(true); }}
-                    className="bg-gray-900 text-white px-10 py-5 rounded-2xl font-black text-sm hover:bg-blue-600 transition-all shadow-2xl hover:-translate-y-1 active:scale-95 flex items-center gap-3"
+                    className="bg-blue-600 text-white px-8 py-3 rounded font-bold text-sm hover:bg-blue-700 transition-all flex items-center gap-2"
                 >
-                    <span className="text-xl">+</span> Dodaj Novo Vozilo
+                    + Dodaj Novo Vozilo
                 </button>
             </div>
 
@@ -102,36 +101,36 @@ const VehicleManagementPage = () => {
                 </div>
             )}
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {vehicles.map(v => (
-                    <div key={v.id} className="group bg-white rounded-[2.5rem] overflow-hidden shadow-2xl hover:shadow-blue-200/50 transition-all border border-gray-50 flex flex-col">
-                        <div className="h-56 overflow-hidden relative">
+                    <div key={v.id} className="bg-white border border-gray-200 rounded shadow-sm overflow-hidden flex flex-col">
+                        <div className="h-48 overflow-hidden relative border-b border-gray-100">
                             <img
                                 src={v.image_url || 'https://images.unsplash.com/photo-1542362567-b07e54358753?q=80&w=800'}
                                 alt={v.marka}
-                                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                                className="w-full h-full object-cover"
                             />
-                            <div className="absolute top-6 left-6">
-                                <span className="bg-white/90 backdrop-blur-md text-gray-900 px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-xl">
+                            <div className="absolute top-4 left-4">
+                                <span className="bg-white/90 text-gray-900 px-3 py-1 rounded text-[10px] font-bold uppercase border border-gray-200 shadow-sm">
                                     {v.status}
                                 </span>
                             </div>
                         </div>
-                        <div className="p-8 flex-grow">
+                        <div className="p-6 flex-grow">
                             <div className="flex justify-between items-start mb-2">
-                                <h3 className="text-2xl font-black text-gray-900 leading-tight">{v.marka} {v.model}</h3>
-                                <p className="font-black text-blue-600 text-xl">{v.cenaPoDanu}€</p>
+                                <h3 className="text-xl font-bold text-gray-900">{v.marka} {v.model}</h3>
+                                <p className="font-bold text-blue-600 text-lg">{v.cenaPoDanu}€</p>
                             </div>
-                            <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-6">{v.kategorija?.naziv || 'KATEGORIJA'}</p>
+                            <p className="text-[10px] font-bold text-gray-400 uppercase mb-4">{v.kategorija?.naziv || 'KATEGORIJA'}</p>
 
-                            <div className="grid grid-cols-2 gap-4 text-[10px] font-bold text-gray-500 mb-8">
-                                <div className="bg-gray-50 p-3 rounded-xl border border-gray-100 uppercase tracking-tighter text-center">
+                            <div className="grid grid-cols-2 gap-3 text-[10px] font-bold text-gray-500 mb-6">
+                                <div className="bg-gray-50 p-2 rounded border border-gray-100 uppercase text-center">
                                     {v.gorivo}
                                 </div>
-                                <div className="bg-gray-50 p-3 rounded-xl border border-gray-100 uppercase tracking-tighter text-center">
+                                <div className="bg-gray-50 p-2 rounded border border-gray-100 uppercase text-center">
                                     {v.menjac}
                                 </div>
-                                <div className="bg-gray-50 p-3 rounded-xl border border-gray-100 uppercase tracking-tighter text-center col-span-2">
+                                <div className="bg-gray-50 p-2 rounded border border-gray-100 uppercase text-center col-span-2">
                                     Reg: {v.registracioniBroj}
                                 </div>
                             </div>
@@ -139,13 +138,13 @@ const VehicleManagementPage = () => {
                             <div className="grid grid-cols-2 gap-3">
                                 <button
                                     onClick={() => { setEditingVehicle(v); setFormData(v); setIsModalOpen(true); }}
-                                    className="bg-blue-50 text-blue-600 py-3 rounded-xl text-xs font-black uppercase hover:bg-blue-600 hover:text-white transition-all"
+                                    className="bg-gray-100 text-blue-600 py-2 rounded text-xs font-bold uppercase hover:bg-blue-600 hover:text-white transition-all border border-blue-100"
                                 >
                                     Izmeni
                                 </button>
                                 <button
                                     onClick={() => handleDelete(v.id)}
-                                    className="bg-red-50 text-red-500 py-3 rounded-xl text-xs font-black uppercase hover:bg-red-500 hover:text-white transition-all"
+                                    className="bg-gray-100 text-red-500 py-2 rounded text-xs font-bold uppercase hover:bg-red-500 hover:text-white transition-all border border-red-100"
                                 >
                                     Ukloni
                                 </button>
@@ -155,13 +154,13 @@ const VehicleManagementPage = () => {
                 ))}
             </div>
 
-            {/* Premium Modal */}
+            {/* Simple Modal */}
             {isModalOpen && (
-                <div className="fixed inset-0 bg-gray-900/80 backdrop-blur-xl flex items-center justify-center z-[100] p-4">
-                    <div className="bg-white rounded-[3rem] p-12 max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-[0_0_100px_rgba(30,58,138,0.2)] border border-blue-100">
-                        <div className="text-center mb-10">
-                            <h2 className="text-4xl font-black text-gray-900 mb-2">{editingVehicle ? 'Izmena Vozila' : 'Novi Automobil'}</h2>
-                            <p className="text-xs text-gray-400 font-bold uppercase tracking-[0.3em]">Popunite detalje o vozilu</p>
+                <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-[100] p-4">
+                    <div className="bg-white rounded p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-xl border border-gray-200">
+                        <div className="text-center mb-8">
+                            <h2 className="text-2xl font-bold text-gray-900 mb-2">{editingVehicle ? 'Izmena Vozila' : 'Novi Automobil'}</h2>
+                            <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Popunite detalje o vozilu</p>
                         </div>
 
                         <form onSubmit={handleSave} className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -203,17 +202,17 @@ const VehicleManagementPage = () => {
                                 <Input label="URL slike automobila" value={formData.image_url} onChange={e => setFormData({ ...formData, image_url: e.target.value })} placeholder="https://..." />
                             </div>
 
-                            <div className="col-span-1 md:col-span-2 grid grid-cols-2 gap-4 mt-10">
+                            <div className="col-span-1 md:col-span-2 grid grid-cols-2 gap-4 mt-8">
                                 <button
                                     type="button"
                                     onClick={() => setIsModalOpen(false)}
-                                    className="py-5 rounded-2xl font-black text-sm uppercase tracking-widest text-gray-400 hover:text-gray-900 transition-all"
+                                    className="py-3 font-bold text-xs uppercase tracking-widest text-gray-400 hover:text-gray-900 transition-all"
                                 >
                                     Odustani
                                 </button>
                                 <button
                                     type="submit"
-                                    className="bg-blue-600 text-white py-5 rounded-2xl font-black text-sm uppercase tracking-widest shadow-2xl shadow-blue-200 hover:bg-blue-700 hover:-translate-y-1 transition-all"
+                                    className="bg-blue-600 text-white py-3 rounded font-bold text-xs uppercase tracking-widest hover:bg-blue-700 transition-all"
                                 >
                                     Sačuvaj Vozilo
                                 </button>

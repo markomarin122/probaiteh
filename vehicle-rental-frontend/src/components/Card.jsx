@@ -3,7 +3,7 @@ import React from 'react';
 const Card = ({ title, subtitle, image, children, footer, className = '', onClick }) => {
     return (
         <div
-            className={`bg-white rounded-lg shadow-md overflow-hidden border border-gray-100 flex flex-col ${className} ${onClick ? 'cursor-pointer hover:shadow-lg transition-shadow' : ''}`}
+            className={`bg-white rounded-lg shadow-sm overflow-hidden border border-gray-100 flex flex-col ${className} ${onClick ? 'cursor-pointer hover:shadow transition-shadow' : ''}`}
             onClick={onClick}
         >
             {image && (

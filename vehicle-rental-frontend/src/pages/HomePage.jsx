@@ -23,45 +23,45 @@ const HomePage = () => {
 
     return (
         <div className="flex flex-col">
-            {/* Hero Section */}
-            <div className="relative bg-white pt-20 pb-32 overflow-hidden">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                    <div className="text-center">
-                        <h1 className="text-6xl md:text-8xl font-black text-gray-900 tracking-tighter leading-none mb-6">
-                            VAŠA AVANTURA <br />
-                            <span className="text-blue-600">POČINJE OVDE.</span>
-                        </h1>
-                        <p className="text-xl text-gray-500 max-w-2xl mx-auto font-medium mb-10 leading-relaxed">
-                            Iznajmite vrhunska vozila po najpovoljnijim cenama. Brzo, lako i potpuno digitalno iskustvo rezervacije.
-                        </p>
-                        <div className="flex justify-center gap-4">
-                            <Button variant="primary" size="lg" className="px-10 h-16 text-lg" onClick={() => window.location.href = '/vozila'}>
-                                Istraži Flotu
-                            </Button>
-                            <Button variant="secondary" size="lg" className="px-10 h-16 text-lg" onClick={() => window.location.href = '/register'}>
-                                Postani Član
-                            </Button>
-                        </div>
+            {/* Hero Section - Uprošćeno */}
+            <div className="bg-gray-100 py-16 px-4">
+                <div className="max-w-4xl mx-auto text-center">
+                    <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+                        Iznajmljivanje automobila - Brzo i Lako
+                    </h1>
+                    <p className="text-lg text-gray-600 mb-8">
+                        Pronađite najbolja vozila za vaše potrebe na našem sajtu. Sigurno i pouzdano.
+                    </p>
+                    <div className="flex justify-center gap-4">
+                        <button
+                            className="bg-blue-600 text-white px-6 py-3 rounded font-bold hover:bg-blue-700 transition"
+                            onClick={() => window.location.href = '/vozila'}
+                        >
+                            Pogledaj Vozila
+                        </button>
+                        <button
+                            className="bg-gray-300 text-gray-800 px-6 py-3 rounded font-bold hover:bg-gray-400 transition"
+                            onClick={() => window.location.href = '/register'}
+                        >
+                            Registruj se
+                        </button>
                     </div>
                 </div>
-
-                {/* Decorative background circle */}
-                <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-[800px] h-[800px] bg-blue-50 rounded-full blur-3xl opacity-50 -z-10"></div>
             </div>
 
-            {/* Features section */}
-            <div className="bg-gray-50 py-24">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="grid md:grid-cols-3 gap-12">
+            {/* Prednosti - Jednostavne kartice */}
+            <div className="bg-white py-16">
+                <div className="max-w-7xl mx-auto px-4">
+                    <div className="grid md:grid-cols-3 gap-8">
                         {[
-                            { title: 'BRZA REZERVACIJA', desc: 'Rezervišite vozilo u manje od 2 minuta preko našeg portala.', icon: '⚡' },
-                            { title: 'NAJBOLJE CENE', desc: 'Garantujemo najniže cene na tržištu bez skrivenih troškova.', icon: '💎' },
-                            { title: '24/7 PODRŠKA', desc: 'Naš tim je tu za vas u svakom trenutku putovanja.', icon: '📞' }
+                            { title: 'BRZA REZERVACIJA', desc: 'Rezervišite vozilo brzo preko našeg portala.', icon: '⚡' },
+                            { title: 'NIŽE CENE', desc: 'Uvek povoljne cene za sve naše korisnike.', icon: '💰' },
+                            { title: 'STALNA PODRŠKA', desc: 'Tu smo za vas ako imate bilo kakva pitanja.', icon: '📞' }
                         ].map((feat, i) => (
-                            <div key={i} className="bg-white p-10 rounded-3xl shadow-sm border border-gray-100 hover:shadow-xl transition-all border-b-4 border-b-blue-600">
-                                <span className="text-4xl mb-6 block">{feat.icon}</span>
-                                <h3 className="text-xl font-black text-gray-900 mb-4">{feat.title}</h3>
-                                <p className="text-gray-500 font-medium">{feat.desc}</p>
+                            <div key={i} className="border border-gray-200 p-6 rounded shadow-sm text-center">
+                                <div className="text-3xl mb-4">{feat.icon}</div>
+                                <h3 className="font-bold text-lg mb-2">{feat.title}</h3>
+                                <p className="text-gray-600 text-sm">{feat.desc}</p>
                             </div>
                         ))}
                     </div>
@@ -71,12 +71,12 @@ const HomePage = () => {
             {/* Featured Vehicles */}
             <div className="py-24">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex justify-between items-end mb-12">
+                    <div className="flex justify-between items-end mb-8">
                         <div>
-                            <h2 className="text-4xl font-black text-gray-900 tracking-tight">Izdvajamo iz ponude</h2>
-                            <p className="text-gray-500 font-medium">Pogledajte neka od naših najpopularnijih vozila.</p>
+                            <h2 className="text-3xl font-bold text-gray-900">Izdvajamo iz ponude</h2>
+                            <p className="text-gray-600 font-medium">Pogledajte neka od naših najpopularnijih vozila.</p>
                         </div>
-                        <a href="/vozila" className="text-blue-600 font-black uppercase text-xs tracking-widest hover:underline">Sva vozila →</a>
+                        <a href="/vozila" className="text-blue-600 font-bold uppercase text-[10px] hover:underline">Sva vozila →</a>
                     </div>
 
                     <div className="grid md:grid-cols-3 gap-8">
@@ -86,16 +86,16 @@ const HomePage = () => {
                             vehicles.map(v => (
                                 <Card
                                     key={v.id}
-                                    title={`${v.brand} ${v.model}`}
-                                    subtitle={v.category?.name}
+                                    title={`${v.marka} ${v.model}`}
+                                    subtitle={v.kategorija?.naziv}
                                     image={v.image_url || 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&q=80&w=800'}
                                     footer={
-                                        <Button variant="primary" className="w-full" onClick={() => window.location.href = `/vozila/${v.id}`}>
-                                            Rezerviši odmah
-                                        </Button>
+                                        <button className="w-full bg-blue-600 text-white py-2 rounded font-bold hover:bg-blue-700 transition" onClick={() => window.location.href = `/vozila/${v.id}`}>
+                                            Rezerviši
+                                        </button>
                                     }
                                 >
-                                    <p className="text-2xl font-black text-blue-600 mt-2">{v.category?.daily_price} € <span className="text-xs text-gray-400">/dan</span></p>
+                                    <p className="text-xl font-bold text-blue-600 mt-2">{v.cenaPoDanu} € <span className="text-[10px] text-gray-500 font-bold uppercase">/dan</span></p>
                                 </Card>
                             ))
                         )}
@@ -103,14 +103,17 @@ const HomePage = () => {
                 </div>
             </div>
 
-            {/* CTA section */}
-            <div className="bg-blue-600 py-20">
-                <div className="max-w-5xl mx-auto px-4 text-center">
-                    <h2 className="text-4xl font-black text-white mb-6">SPREMNI ZA PUT?</h2>
-                    <p className="text-blue-100 text-xl font-medium mb-10">Pridružite se hiljadama zadovoljnih korisnika i doživite slobodu kretanja.</p>
-                    <Button variant="secondary" size="lg" className="px-12 bg-white text-blue-600 hover:bg-gray-100 border-none" onClick={() => window.location.href = '/register'}>
-                        Registruj se sada
-                    </Button>
+            {/* CTA section - Standardna */}
+            <div className="bg-blue-600 py-16 text-center text-white">
+                <div className="max-w-xl mx-auto px-4">
+                    <h2 className="text-3xl font-bold mb-4">Želite da iznajmite vozilo?</h2>
+                    <p className="mb-8">Napravite nalog i krenite na put već danas.</p>
+                    <button
+                        className="bg-white text-blue-600 px-8 py-3 rounded font-bold hover:bg-gray-100"
+                        onClick={() => window.location.href = '/register'}
+                    >
+                        Registruj se
+                    </button>
                 </div>
             </div>
         </div>

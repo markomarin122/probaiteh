@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Recenzija;
+use App\Models\Aktivnost;
 use Illuminate\Http\Request;
 
 class ReviewController extends Controller
@@ -33,6 +34,13 @@ class ReviewController extends Controller
             'voziloId' => $request->voziloId,
             'ocena' => $request->ocena,
             'komentar' => $request->komentar,
+        ]);
+
+        Aktivnost::create([
+            'korisnikId' => $request->user()->id,
+            'akcija' => 'REVIEW_SUBMITTED',
+            'detalji' => "Ostavljena recenzija ({$review->ocena}/5) za vozilo #{$review->voziloId}",
+            'tip' => 'info'
         ]);
 
         return response()->json([

@@ -39,35 +39,35 @@ const LoginPage = () => {
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-50 py-20 px-4">
-            <div className="max-w-5xl w-full bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col md:flex-row-reverse border border-gray-100">
+            <div className="max-w-4xl w-full bg-white rounded border border-gray-200 shadow-sm overflow-hidden flex flex-col md:flex-row-reverse">
 
-                {/* Info Side (Reverse for Login) */}
+                {/* Info Side */}
                 <div className="md:w-1/2 bg-blue-600 p-12 text-white flex flex-col justify-center">
-                    <h2 className="text-4xl font-black mb-6 tracking-tight">DOBRODOŠLI <br /> NAZAD.</h2>
-                    <p className="text-blue-100 text-lg font-medium mb-8 leading-relaxed">
-                        Vaša sledeća destinacija vas čeka. Prijavite se i nastavite tamo gde ste stala.
+                    <h2 className="text-3xl font-bold mb-4">DOBRODOŠLI NAZAD</h2>
+                    <p className="text-blue-100 font-medium mb-8">
+                        Prijavite se i nastavite tamo gde ste stali.
                     </p>
-                    <div className="p-6 bg-blue-500/30 rounded-2xl border border-blue-400/30">
-                        <p className="text-sm italic">"Najbolji servis za iznajmljivanje u regionu. Sve pohvale za flotu!"</p>
-                        <p className="mt-4 font-black text-xs uppercase tracking-widest text-blue-200">- Zadovoljan klijent</p>
+                    <div className="p-4 bg-blue-500 rounded border border-blue-400">
+                        <p className="text-xs italic">"Najbolji servis za iznajmljivanje u regionu."</p>
+                        <p className="mt-2 font-bold text-[10px] uppercase text-blue-200">- KLIJENT</p>
                     </div>
                 </div>
 
                 {/* Form Side */}
-                <div className="md:w-1/2 p-12 md:p-16">
-                    <div className="mb-10">
-                        <h3 className="text-3xl font-black text-gray-900 mb-2">Prijavi se</h3>
-                        <p className="text-gray-400 font-bold uppercase text-xs tracking-widest">Pristupite svom panelu</p>
+                <div className="md:w-1/2 p-10">
+                    <div className="mb-8">
+                        <h3 className="text-2xl font-bold text-gray-900">Prijavi se</h3>
+                        <p className="text-gray-500 font-bold uppercase text-[10px]">Pristupite svom panelu</p>
                     </div>
 
                     <form className="space-y-6" onSubmit={handleLogin}>
                         {successMsg && (
-                            <div className="bg-green-50 border border-green-200 text-green-600 px-4 py-3 rounded-xl text-sm font-bold">
+                            <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded text-[10px] font-bold uppercase">
                                 {successMsg}
                             </div>
                         )}
                         {error && (
-                            <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-xl text-sm font-bold">
+                            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded text-[10px] font-bold uppercase">
                                 {error}
                             </div>
                         )}
@@ -90,22 +90,21 @@ const LoginPage = () => {
                         />
 
                         <div className="pt-4">
-                            <Button
+                            <button
                                 type="submit"
-                                variant="primary"
-                                className="w-full h-14 text-lg font-black shadow-xl shadow-blue-100"
+                                className="w-full bg-blue-600 text-white h-12 rounded font-bold hover:bg-blue-700 uppercase text-xs"
                                 disabled={loading}
                             >
                                 {loading ? 'Prijava...' : 'Prijavi se'}
-                            </Button>
+                            </button>
                         </div>
                     </form>
 
-                    <div className="mt-10 text-center">
-                        <p className="text-sm text-gray-500 font-medium">
+                    <div className="mt-8 text-center text-xs">
+                        <p className="text-gray-500 font-medium">
                             Nemaš nalog?{' '}
-                            <a href="/register" className="font-black text-blue-600 hover:text-blue-700 underline decoration-blue-200">
-                                Registruj se ovde
+                            <a href="/register" className="font-bold text-blue-600 hover:text-blue-700 underline">
+                                Registruj se
                             </a>
                         </p>
                     </div>

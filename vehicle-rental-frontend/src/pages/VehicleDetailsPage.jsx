@@ -160,30 +160,29 @@ const VehicleDetailsPage = () => {
 
     return (
         <div className="max-w-7xl mx-auto px-4 py-12">
-            <div className="bg-white rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col lg:flex-row border border-gray-100">
+            <div className="bg-white rounded border border-gray-200 shadow-sm overflow-hidden flex flex-col lg:flex-row">
                 {/* Image Section */}
-                <div className="lg:w-[60%] relative group">
+                <div className="lg:w-[60%] relative">
                     <img
                         src={vehicle.image_url || 'https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&q=80&w=1200'}
                         alt={vehicle.model}
-                        className="w-full h-full object-cover min-h-[500px] transition-transform duration-700 group-hover:scale-105"
+                        className="w-full h-full object-cover min-h-[500px]"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 </div>
 
                 {/* Content Section */}
                 <div className="lg:w-[40%] p-10 lg:p-14 space-y-8 bg-white relative">
                     <div className="space-y-4">
                         <div className="flex items-center space-x-2">
-                            <span className="px-4 py-1.5 rounded-full bg-blue-50 text-blue-600 text-[10px] font-black uppercase tracking-[0.2em] shadow-sm">
+                            <span className="px-2 py-0.5 rounded bg-blue-50 text-blue-600 text-[10px] font-bold uppercase">
                                 {vehicle.kategorija?.naziv}
                             </span>
-                            <span className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] shadow-sm ${vehicle.status === 'DOSTUPNO' ? 'bg-green-50 text-green-600' : 'bg-red-50 text-red-600'}`}>
+                            <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase ${vehicle.status === 'DOSTUPNO' ? 'bg-green-50 text-green-600' : 'bg-red-50 text-red-600'}`}>
                                 {vehicle.status}
                             </span>
                         </div>
                         <div className="flex justify-between items-start">
-                            <h1 className="text-5xl font-black text-gray-900 leading-[1.1] tracking-tighter">
+                            <h1 className="text-3xl font-bold text-gray-900 leading-tight">
                                 {vehicle.marka} <span className="text-blue-600">{vehicle.model}</span>
                             </h1>
                             {currentUser && (currentUser.uloga === 'SLUZBENIK' || currentUser.uloga === 'ADMINISTRATOR') && (
@@ -203,93 +202,77 @@ const VehicleDetailsPage = () => {
                                 </div>
                             )}
                         </div>
-                        <p className="text-gray-400 font-bold uppercase text-[10px] tracking-[0.3em]">
+                        <p className="text-gray-600 font-bold uppercase text-[10px]">
                             Model {vehicle.godiste}. • {vehicle.registracioniBroj}
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-6 py-8 border-y border-gray-50">
+                    <div className="grid grid-cols-2 gap-6 py-6 border-y border-gray-100">
                         <div className="flex items-center space-x-4">
-                            <div className="text-2xl opacity-70">⛽</div>
+                            <div className="text-2xl">⛽</div>
                             <div>
-                                <p className="text-[9px] text-gray-400 uppercase font-black tracking-widest leading-none mb-1">Gorivo</p>
+                                <p className="text-[9px] text-gray-500 uppercase font-bold leading-none mb-1">Gorivo</p>
                                 <p className="font-bold text-gray-800 text-sm capitalize">{vehicle.gorivo}</p>
                             </div>
                         </div>
                         <div className="flex items-center space-x-4">
-                            <div className="text-2xl opacity-70">⚙️</div>
+                            <div className="text-2xl">⚙️</div>
                             <div>
-                                <p className="text-[9px] text-gray-400 uppercase font-black tracking-widest leading-none mb-1">Menjač</p>
+                                <p className="text-[9px] text-gray-500 uppercase font-bold leading-none mb-1">Menjač</p>
                                 <p className="font-bold text-gray-800 text-sm capitalize">{vehicle.menjac}</p>
                             </div>
                         </div>
                         <div className="flex items-center space-x-4">
-                            <div className="text-2xl opacity-70">👥</div>
+                            <div className="text-2xl">👥</div>
                             <div>
-                                <p className="text-[9px] text-gray-400 uppercase font-black tracking-widest leading-none mb-1">Sedišta</p>
+                                <p className="text-[9px] text-gray-500 uppercase font-bold leading-none mb-1">Sedišta</p>
                                 <p className="font-bold text-gray-800 text-sm">{vehicle.sedista} Osobe</p>
                             </div>
                         </div>
                         <div className="flex items-center space-x-4">
-                            <div className="text-2xl opacity-70">📍</div>
+                            <div className="text-2xl">📍</div>
                             <div>
-                                <p className="text-[9px] text-gray-400 uppercase font-black tracking-widest leading-none mb-1">Lokacija</p>
+                                <p className="text-[9px] text-gray-500 uppercase font-bold leading-none mb-1">Lokacija</p>
                                 <p className="font-bold text-gray-800 text-sm">{vehicle.filijala?.grad}</p>
                             </div>
                         </div>
                     </div>
 
-                    <div className="bg-gray-50/50 p-6 rounded-3xl border border-gray-100 flex items-center justify-between">
+                    <div className="bg-gray-50 p-6 rounded border border-gray-200 flex items-center justify-between">
                         <div>
-                            <p className="text-[10px] font-black uppercase text-gray-400 tracking-widest leading-none mb-2">Cena po danu</p>
-                            <p className="text-4xl font-black text-gray-900 tracking-tighter">{vehicle.cenaPoDanu} €</p>
+                            <p className="text-[10px] font-bold uppercase text-gray-500 leading-none mb-2">Cena po danu</p>
+                            <p className="text-3xl font-bold text-gray-900">{vehicle.cenaPoDanu} €</p>
                         </div>
                         <div className="h-10 w-[1px] bg-gray-200 mx-4"></div>
                         <div className="text-right">
-                            <p className="text-[10px] font-black uppercase text-blue-500 tracking-widest">Osiguranje</p>
-                            <p className="text-sm font-bold text-gray-800">Uključeno</p>
+                            <p className="text-[10px] font-bold uppercase text-blue-600">Osiguranje</p>
+                            <p className="text-sm font-bold text-gray-800 uppercase">UKLJUČENO</p>
                         </div>
                     </div>
 
                     <form onSubmit={handleBooking} className="space-y-6 pt-4">
                         {currentUser && (currentUser.uloga === 'SLUZBENIK' || currentUser.uloga === 'ADMINISTRATOR') && (
-                            <div className="bg-blue-600 p-8 rounded-[2.5rem] border border-blue-500 relative group transition-all shadow-2xl shadow-blue-200 overflow-visible">
-                                <label className="block text-[10px] font-black uppercase text-white mb-4 tracking-[0.2em] ml-2 opacity-80">Rezerviši za klijenta (Opciono)</label>
+                            <div className="bg-blue-600 p-6 rounded border border-blue-500 shadow-lg">
+                                <label className="block text-[10px] font-bold uppercase text-white mb-4">Rezerviši za klijenta (Opciono)</label>
 
                                 <div className="relative">
-                                    <div className="flex items-center bg-white rounded-2xl px-5 py-4 focus-within:ring-4 focus-within:ring-white/20 transition-all shadow-lg border-2 border-transparent focus-within:border-white">
-                                        <span className="mr-3 text-lg opacity-40">🔍</span>
+                                    <div className="flex items-center bg-white rounded px-4 py-2 border border-blue-400">
                                         <input
                                             type="text"
                                             className="w-full bg-transparent text-sm font-bold text-gray-800 outline-none placeholder:text-gray-400"
-                                            placeholder="Kucajte ime ili email..."
+                                            placeholder="Klijent email..."
                                             value={clientSearch}
-                                            onFocus={() => {
-                                                setDropdownOpen(true);
-                                            }}
+                                            onFocus={() => setDropdownOpen(true)}
                                             onChange={(e) => {
                                                 setClientSearch(e.target.value);
                                                 setDropdownOpen(true);
-                                                fetchClients(e.target.value); // Pozivamo pretragu pri kucanju
+                                                fetchClients(e.target.value);
                                             }}
                                         />
-                                        {selectedClientId && (
-                                            <button
-                                                type="button"
-                                                onClick={() => {
-                                                    setSelectedClientId('');
-                                                    setClientSearch('');
-                                                    fetchClients('');
-                                                }}
-                                                className="ml-2 text-[10px] font-black uppercase text-red-500 hover:text-red-700 transition-colors bg-red-50 px-3 py-1.5 rounded-lg"
-                                            >
-                                                Poništi
-                                            </button>
-                                        )}
                                     </div>
 
                                     {dropdownOpen && (
-                                        <div className="absolute left-0 right-0 z-[60] mt-3 bg-white rounded-[2rem] shadow-[0_30px_60px_-12px_rgba(0,0,0,0.25)] border border-gray-100 overflow-hidden max-h-72 overflow-y-auto animate-in zoom-in-95 duration-200">
+                                        <div className="absolute left-0 right-0 z-[60] mt-1 bg-white rounded border border-gray-200 shadow-xl overflow-hidden max-h-60 overflow-y-auto">
                                             {clients.map(client => (
                                                 <div
                                                     key={client.id}
@@ -298,26 +281,15 @@ const VehicleDetailsPage = () => {
                                                         setClientSearch(client.email);
                                                         setDropdownOpen(false);
                                                     }}
-                                                    className="px-6 py-5 hover:bg-blue-50 cursor-pointer flex justify-between items-center group transition-colors border-b border-gray-50 last:border-0"
+                                                    className="px-4 py-3 hover:bg-gray-50 cursor-pointer border-b border-gray-100 last:border-0"
                                                 >
-                                                    <div>
-                                                        <p className="text-sm font-black text-gray-900 group-hover:text-blue-600 transition-colors">{client.ime}</p>
-                                                        <span className="text-[10px] font-bold text-gray-400 bg-gray-50 px-2 py-0.5 rounded-md mt-1 inline-block">{client.email}</span>
-                                                    </div>
-                                                    {selectedClientId == client.id && (
-                                                        <div className="bg-blue-600 text-white w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold">✓</div>
-                                                    )}
+                                                    <p className="text-sm font-bold text-gray-900">{client.ime}</p>
+                                                    <p className="text-[10px] text-gray-500">{client.email}</p>
                                                 </div>
                                             ))}
-                                            {clients.length === 0 && (
-                                                <div className="px-6 py-10 text-center text-gray-400 font-bold text-xs uppercase tracking-widest">
-                                                    Nema rezultata u bazi...
-                                                </div>
-                                            )}
                                         </div>
                                     )}
                                 </div>
-                                {dropdownOpen && <div className="fixed inset-0 z-50 bg-transparent" onClick={() => setDropdownOpen(false)}></div>}
                             </div>
                         )}
 
@@ -344,50 +316,36 @@ const VehicleDetailsPage = () => {
                         <Button
                             type="submit"
                             variant="primary"
-                            className="w-full h-16 text-lg font-black shadow-2xl shadow-blue-200 tracking-tight"
+                            className="w-full h-12 text-sm font-bold uppercase"
                             disabled={bookingLoading || vehicle.status !== 'DOSTUPNO'}
                         >
-                            {bookingLoading ? 'Slanje upita...' : vehicle.status === 'DOSTUPNO' ? 'Rezerviši odmah' : 'Vozilo nije dostupno'}
+                            {bookingLoading ? 'Slanje...' : vehicle.status === 'DOSTUPNO' ? 'Rezerviši' : 'Nije dostupno'}
                         </Button>
                     </form>
                 </div>
             </div>
 
-            {/* Reviews Section */}
-            <div className="mt-20 space-y-12">
-                <div className="flex items-center justify-between">
-                    <h2 className="text-4xl font-black text-gray-900 tracking-tight flex items-center">
-                        <span className="mr-4">⭐</span> Recenzije i Iskustva
-                    </h2>
-                    <div className="text-right">
-                        <p className="text-[10px] font-black uppercase text-gray-400 tracking-widest">Ukupno</p>
-                        <p className="text-xl font-bold text-gray-900">{vehicle.reviews?.length || 0} Utisaka</p>
-                    </div>
-                </div>
+            <div className="mt-20">
+                <h2 className="text-2xl font-bold text-gray-900 mb-8">Recenzije</h2>
 
                 <div className="grid lg:grid-cols-3 gap-12">
                     {/* List */}
                     <div className="lg:col-span-2 space-y-6">
                         {vehicle.reviews?.length > 0 ? (
                             vehicle.reviews.map(review => (
-                                <div key={review.id} className="bg-white p-8 rounded-[2rem] border border-gray-100 shadow-sm transition-all hover:shadow-xl hover:-translate-y-1">
-                                    <div className="flex justify-between items-start mb-6">
-                                        <div className="flex items-center space-x-4">
-                                            <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center font-black text-white text-lg">
+                                <div key={review.id} className="bg-white p-6 rounded border border-gray-200 shadow-sm">
+                                    <div className="flex justify-between items-start mb-4">
+                                        <div className="flex items-center space-x-3">
+                                            <div className="w-10 h-10 bg-blue-600 rounded flex items-center justify-center font-bold text-white uppercase">
                                                 {review.korisnik?.ime?.charAt(0) || 'K'}
                                             </div>
                                             <div>
-                                                <p className="font-black text-gray-900 leading-none">{review.korisnik?.ime}</p>
-                                                <p className="text-[10px] text-gray-400 font-bold uppercase mt-1">{new Date(review.created_at).toLocaleDateString()}</p>
+                                                <p className="font-bold text-gray-900 text-sm">{review.korisnik?.ime}</p>
+                                                <p className="text-[9px] text-gray-500 font-bold uppercase">{new Date(review.created_at).toLocaleDateString()}</p>
                                             </div>
                                         </div>
-                                        <div className="flex text-yellow-400 text-sm">
-                                            {[...Array(5)].map((_, i) => (
-                                                <span key={i} className={i < review.ocena ? 'text-yellow-400' : 'text-gray-100'}>★</span>
-                                            ))}
-                                        </div>
                                     </div>
-                                    <p className="text-gray-600 leading-relaxed font-medium">"{review.komentar}"</p>
+                                    <p className="text-gray-700 text-sm italic">"{review.komentar}"</p>
                                 </div>
                             ))
                         ) : (
@@ -399,8 +357,8 @@ const VehicleDetailsPage = () => {
                     </div>
 
                     {/* Form */}
-                    <div className="bg-white p-10 rounded-[2.5rem] shadow-2xl border border-gray-50 h-fit sticky top-8">
-                        <h3 className="text-2xl font-black text-gray-900 mb-8">Ostavite Utisak</h3>
+                    <div className="bg-white p-8 rounded border border-gray-200 shadow-sm h-fit">
+                        <h3 className="text-xl font-bold text-gray-900 mb-6">Ostavite Utisak</h3>
                         <form className="space-y-6" onSubmit={async (e) => {
                             e.preventDefault();
                             const token = localStorage.getItem('token');

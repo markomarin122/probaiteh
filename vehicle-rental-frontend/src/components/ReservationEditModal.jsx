@@ -9,6 +9,7 @@ const ReservationEditModal = ({ reservation, onClose, onSave }) => {
         vremeVracanja: '',
         voziloId: ''
     });
+    const [vehicles, setVehicles] = useState([]); // DEFINISANA STANJA
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [unavailableDates, setUnavailableDates] = useState([]);
@@ -16,8 +17,9 @@ const ReservationEditModal = ({ reservation, onClose, onSave }) => {
     useEffect(() => {
         if (reservation) {
             setFormData({
-                vremePreuzimanja: reservation.vremePreuzimanja.split(' ')[0],
-                vremeVracanja: reservation.vremeVracanja.split(' ')[0],
+                // Split u slučaju da bekhend šalje format "YYYY-MM-DD HH:MM:SS"
+                vremePreuzimanja: reservation.vremePreuzimanja ? reservation.vremePreuzimanja.split(' ')[0] : '',
+                vremeVracanja: reservation.vremeVracanja ? reservation.vremeVracanja.split(' ')[0] : '',
                 voziloId: reservation.voziloId
             });
         }

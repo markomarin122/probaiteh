@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Rezervacija;
 use App\Models\Vozilo;
+use App\Models\Aktivnost;
 use Illuminate\Http\Request;
 
 class ReservationController extends Controller
@@ -112,6 +113,13 @@ class ReservationController extends Controller
             'napomene' => $request->napomene,
         ]);
 
+        Aktivnost::create([
+            'korisnikId' => $request->user()->id,
+            'akcija' => 'RESERVATION_CREATED',
+            'detalji' => "Kreirana nova rezervacija #{$reservation->id} za vozilo {$vehicle->marka} {$vehicle->model}",
+            'tip' => 'info'
+        ]);
+
         return response()->json([
             'message' => 'Rezervacija uspešno kreirana.',
             'reservation' => $reservation,
@@ -166,9 +174,11 @@ class ReservationController extends Controller
         // SLUZBENIK i ADMINISTRATOR imaju pristup svim rezervacijama
 
         if ($request->has('voziloId') || $request->has('vremePreuzimanja') || $request->has('vremeVracanja')) {
-            // Dozvoljeno samo ako je rezervacija na čekanju
-            if ($reservation->status !== 'CEKA') {
-                 return response()->json(['message' => 'Možete menjati samo rezervacije koje su na čekanju.'], 400);
+            // Dozvoljeno samo ako je rezervacija na čekanju (ili potvrđena za admina/službenika)
+            $allowedStatuses = ($userRole === 'KLIJENT') ? ['CEKA'] : ['CEKA', 'POTVRDJENA'];
+            
+            if (!in_array($reservation->status, $allowedStatuses)) {
+                 return response()->json(['message' => 'Možete menjati samo rezervacije koje su na čekanju ili potvrđene.'], 400);
             }
 
             $voziloId = $request->voziloId ?? $reservation->voziloId;
@@ -193,7 +203,7 @@ class ReservationController extends Controller
             // Provera dostupnosti vozila za novi termin (izuzimajući trenutnu rezervaciju)
             $existing = Rezervacija::where('voziloId', $voziloId)
                 ->where('id', '!=', $id)
-                ->whereIn('status', ['POTVRDJENA', 'PREUZETO'])
+                ->whereIn('status', ['CEKA', 'POTVRDJENA', 'PREUZETO'])
                 ->where(function ($q) use ($vremePreuzimanja, $vremeVracanja) {
                     $q->whereBetween('vremePreuzimanja', [$vremePreuzimanja, $vremeVracanja])
                       ->orWhereBetween('vremeVracanja', [$vremePreuzimanja, $vremeVracanja])
@@ -226,8 +236,26 @@ class ReservationController extends Controller
         // Ako je vozilo vraćeno, oslobodi ga
         if ($reservation->status === 'VRACENO' || $reservation->status === 'ZAVRSENA') {
             $reservation->vozilo->update(['status' => 'DOSTUPNO']);
+            
+            if ($reservation->status === 'ZAVRSENA') {
+                Aktivnost::create([
+                    'korisnikId' => $user->id,
+                    'akcija' => 'RENTAL_FINISHED',
+                    'detalji' => "Završen najam za vozilo: {$reservation->vozilo->marka} {$reservation->vozilo->model} (Korisnik: {$reservation->korisnik->ime})",
+                    'tip' => 'success'
+                ]);
+            }
         } elseif ($reservation->status === 'PREUZETO') {
             $reservation->vozilo->update(['status' => 'U_NAJMU']);
+        }
+
+        if ($request->has('status')) {
+            Aktivnost::create([
+                'korisnikId' => $user->id,
+                'akcija' => 'RESERVATION_STATUS_CHANGED',
+                'detalji' => "Izmenjen status rezervacije #{$reservation->id} na {$reservation->status}",
+                'tip' => 'info'
+            ]);
         }
 
         return response()->json([
@@ -243,6 +271,13 @@ class ReservationController extends Controller
     {
         $reservation = Rezervacija::findOrFail($id);
         $reservation->update(['status' => 'OTKAZANA']);
+
+        Aktivnost::create([
+            'korisnikId' => auth()->user()->id,
+            'akcija' => 'RESERVATION_CANCELLED',
+            'detalji' => "Otkazana rezervacija #{$reservation->id}",
+            'tip' => 'warning'
+        ]);
 
         return response()->json([
             'message' => 'Rezervacija uspešno otkazana.',

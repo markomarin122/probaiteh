@@ -7,7 +7,7 @@ const Navbar = ({ user, onLogout }) => {
                 <div className="flex justify-between h-20 items-center">
                     {/* Logo */}
                     <div className="flex-shrink-0 flex items-center">
-                        <a href="/" className="text-2xl font-black text-blue-600 tracking-tighter">ITEH <span className="text-gray-900 underline decoration-blue-500">RENT</span></a>
+                        <a href="/" className="text-xl font-bold text-blue-600">AUTO RENT</a>
                     </div>
 
                     {/* Navigation Links */}
@@ -22,16 +22,15 @@ const Navbar = ({ user, onLogout }) => {
                                 )}
                                 {(user.uloga.toUpperCase() === 'SLUZBENIK' || user.uloga.toUpperCase() === 'ADMINISTRATOR') && (
                                     <>
-                                        <a href="/upravljanje" className="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-[10px] font-black uppercase tracking-widest transition-all">Operativa</a>
-                                        <a href="/upravljanje-vozilima" className="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-[10px] font-black uppercase tracking-widest transition-all">Flota</a>
-                                        <a href="/upravljanje-podrskom" className="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-[10px] font-black uppercase tracking-widest transition-all">Podrška</a>
+                                        <a href="/upravljanje" className="text-gray-600 hover:text-blue-600 px-3 py-2 rounded text-[10px] font-bold uppercase transition-all">Operativa</a>
+                                        <a href="/upravljanje-vozilima" className="text-gray-600 hover:text-blue-600 px-3 py-2 rounded text-[10px] font-bold uppercase transition-all">Flota</a>
+                                        <a href="/upravljanje-podrskom" className="text-gray-600 hover:text-blue-600 px-3 py-2 rounded text-[10px] font-bold uppercase transition-all">Podrška</a>
                                     </>
                                 )}
                                 {user.uloga.toUpperCase() === 'ADMINISTRATOR' && (
                                     <>
-                                        <a href="/admin/korisnici" className="text-purple-600 hover:text-purple-800 px-3 py-2 rounded-md text-[10px] font-black uppercase tracking-widest transition-all">Korisnici</a>
-                                        <a href="/admin/logovi" className="text-purple-600 hover:text-purple-800 px-3 py-2 rounded-md text-[10px] font-black uppercase tracking-widest transition-all">Logovi</a>
-                                        <a href="/admin/podesavanja" className="text-purple-600 hover:text-purple-800 px-3 py-2 rounded-md text-[10px] font-black uppercase tracking-widest transition-all">Sistem</a>
+                                        <a href="/admin/korisnici" className="text-purple-600 hover:text-purple-800 px-3 py-2 rounded text-[10px] font-bold uppercase transition-all">Korisnici</a>
+                                        <a href="/admin/logovi" className="text-purple-600 hover:text-purple-800 px-3 py-2 rounded text-[10px] font-bold uppercase transition-all">Logovi</a>
                                     </>
                                 )}
                             </>
@@ -43,11 +42,11 @@ const Navbar = ({ user, onLogout }) => {
                         {user ? (
                             <div className="flex items-center space-x-6">
                                 {user.uloga === 'ADMINISTRATOR' && (
-                                    <a href="/admin" className="text-xs font-black uppercase tracking-widest bg-blue-50 text-blue-600 px-3 py-1 rounded-full hover:bg-blue-100 transition-all">
+                                    <a href="/admin" className="text-[10px] font-bold uppercase bg-blue-50 text-blue-600 px-3 py-1 rounded hover:bg-blue-100 transition-all">
                                         Admin
                                     </a>
                                 )}
-                                <a href="/profil" className="text-sm font-black text-gray-900 border-b-2 border-blue-500">
+                                <a href="/profil" className="text-sm font-bold text-gray-900 border-b-2 border-blue-500">
                                     {user.ime}
                                 </a>
                                 <button
@@ -60,7 +59,7 @@ const Navbar = ({ user, onLogout }) => {
                         ) : (
                             <div className="space-x-4">
                                 <a href="/login" className="text-sm font-bold text-gray-700 hover:text-blue-600">Prijava</a>
-                                <a href="/register" className="bg-blue-600 text-white px-5 py-2.5 rounded-xl text-sm font-black hover:bg-blue-700 transition-all shadow-lg shadow-blue-100">Registracija</a>
+                                <a href="/register" className="bg-blue-600 text-white px-5 py-2.5 rounded text-sm font-bold hover:bg-blue-700 transition-all">Registracija</a>
                             </div>
                         )}
                     </div>

@@ -1,60 +1,94 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const ActivityLogsPage = () => {
-    // Mocked logs data
-    const logs = [
-        { id: 1, action: 'LOGIN_SUCCESS', user: 'admin@test.com', time: '10:42 AM', date: 'Danas', type: 'info' },
-        { id: 2, action: 'USER_CREATED', user: 'admin@test.com', time: '10:30 AM', date: 'Danas', details: 'Kreiran korisnik Petar Petrović', type: 'success' },
-        { id: 3, action: 'VEHICLE_UPDATED', user: 'sluzbenik@test.com', time: '09:15 AM', date: 'Danas', details: 'Izmenjena cena za Audi Q8', type: 'warning' },
-        { id: 4, action: 'LOGIN_FAILED', user: 'unknown@ip.addr', time: '02:00 AM', date: 'Danas', details: 'IP: 192.168.1.1', type: 'error' },
-        { id: 5, action: 'RESERVATION_CANCELLED', user: 'marko.klijent', time: 'Juče', date: '08/02/2026', type: 'warning' },
-    ];
+    const [logs, setLogs] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [page, setPage] = useState(1);
+    const [hasMore, setHasMore] = useState(false);
+
+    useEffect(() => {
+        fetchLogs(1, true);
+    }, []);
+
+    const fetchLogs = async (pageNum, reset = false) => {
+        const token = localStorage.getItem('token');
+        try {
+            const res = await axios.get(`http://localhost:8000/api/logs?page=${pageNum}`, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+
+            const newLogs = res.data.data || [];
+            if (reset) {
+                setLogs(newLogs);
+            } else {
+                setLogs(prev => [...prev, ...newLogs]);
+            }
+
+            setHasMore(res.data.next_page_url !== null);
+            setLoading(false);
+        } catch (err) {
+            console.error('Error fetching logs:', err);
+            setLoading(false);
+        }
+    };
+
+    const loadMore = () => {
+        const nextPage = page + 1;
+        setPage(nextPage);
+        fetchLogs(nextPage);
+    };
+
+    if (loading && page === 1) return <div className="p-20 text-center font-black text-gray-300 animate-pulse text-2xl tracking-tighter">UČITAVANJE LOGOVA...</div>;
 
     return (
-        <div className="max-w-4xl mx-auto px-4 py-12">
-            <h1 className="text-4xl font-black text-gray-900 mb-2">Sistemski Logovi</h1>
-            <p className="text-gray-400 font-bold uppercase text-xs tracking-widest mb-10">Revizija sistemskih događaja</p>
+        <div className="max-w-7xl mx-auto px-4 py-12">
+            <h1 className="text-3xl font-bold text-gray-900 mb-8">Sistemski Logovi</h1>
 
-            <div className="bg-white rounded-[2.5rem] shadow-sm border border-gray-100 overflow-hidden">
-                <div className="p-8 border-b border-gray-100 bg-gray-50/30">
+            <div className="bg-white rounded border border-gray-200 shadow-sm overflow-hidden">
+                <div className="p-4 border-b border-gray-200 bg-gray-50">
                     <div className="flex gap-4">
-                        <select className="bg-white border border-gray-200 text-xs font-bold uppercase tracking-widest rounded-xl px-4 py-2 outline-none">
-                            <option>Svi Događaji</option>
-                            <option>Greške</option>
-                            <option>Upozorenja</option>
-                        </select>
-                        <input type="date" className="bg-white border border-gray-200 text-xs font-bold rounded-xl px-4 py-2 outline-none" />
+                        <div className="text-[10px] font-black uppercase text-black tracking-widest">Prikazan je istorijat svih akcija u sistemu</div>
                     </div>
                 </div>
 
-                <div className="divide-y divide-gray-50">
-                    {logs.map(log => (
-                        <div key={log.id} className="p-6 hover:bg-gray-50 transition-colors flex items-start gap-4">
-                            <div className={`mt-1 w-2 h-2 rounded-full flex-shrink-0 ${log.type === 'error' ? 'bg-red-500 shadow-[0_0_10px_rgba(239,68,68,0.5)]' :
-                                    log.type === 'warning' ? 'bg-yellow-500 shadow-[0_0_10px_rgba(234,179,8,0.5)]' :
-                                        log.type === 'success' ? 'bg-green-500' : 'bg-blue-500'
-                                }`}></div>
-
+                <div className="divide-y divide-gray-100">
+                    {logs.length > 0 ? logs.map((log) => (
+                        <div key={log.id} className="p-6 hover:bg-gray-50 transition-colors flex gap-6">
                             <div className="flex-grow">
                                 <div className="flex justify-between items-center mb-1">
-                                    <h3 className="font-bold text-gray-900 text-sm tracking-wide">{log.action.replace('_', ' ')}</h3>
-                                    <span className="text-[10px] font-black uppercase text-gray-300 tracking-widest">{log.time}</span>
+                                    <h3 className="font-bold text-gray-900 text-sm">{log.akcija.replace(/_/g, ' ')}</h3>
+                                    <span className="text-[10px] font-bold uppercase text-gray-600">
+                                        {new Date(log.created_at).toLocaleString('sr-RS')}
+                                    </span>
                                 </div>
-                                <p className="text-xs text-gray-500 font-medium">
-                                    <span className="text-gray-400">Korisnik:</span> {log.user}
+                                <p className="text-xs text-gray-700 font-medium">
+                                    <span className="text-gray-600">Izvršio:</span> {log.korisnik?.ime || 'Sistem'} ({log.korisnik?.email || 'N/A'})
                                 </p>
-                                {log.details && (
-                                    <p className="text-xs text-gray-500 mt-1 bg-gray-50 inline-block px-2 py-1 rounded border border-gray-100">
-                                        {log.details}
+                                {log.detalji && (
+                                    <p className="text-xs text-gray-800 mt-2 bg-gray-50 block p-3 rounded border border-gray-100 font-bold italic">
+                                        “{log.detalji}”
                                     </p>
                                 )}
                             </div>
                         </div>
-                    ))}
+                    )) : (
+                        <div className="p-20 text-center text-gray-400 font-bold uppercase tracking-widest text-xs">
+                            Nema zabeleženih aktivnosti u sistemu.
+                        </div>
+                    )}
                 </div>
-                <div className="p-6 text-center border-t border-gray-50">
-                    <button className="text-[10px] font-black uppercase text-blue-600 tracking-widest hover:underline">Učitaj starije zapise</button>
-                </div>
+
+                {hasMore && (
+                    <div className="p-6 text-center border-t border-gray-50">
+                        <button
+                            onClick={loadMore}
+                            className="text-[10px] font-black uppercase text-blue-600 tracking-widest hover:underline"
+                        >
+                            Učitaj starije zapise
+                        </button>
+                    </div>
+                )}
             </div>
         </div>
     );

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Vozilo;
+use App\Models\Aktivnost;
 use Illuminate\Http\Request;
 
 class VehicleController extends Controller
@@ -78,6 +79,13 @@ class VehicleController extends Controller
             'image_url' => $request->image_url,
         ]);
 
+        Aktivnost::create([
+            'korisnikId' => $request->user()->id,
+            'akcija' => 'VEHICLE_CREATED',
+            'detalji' => "Dodato novo vozilo: {$vehicle->marka} {$vehicle->model} ({$vehicle->registracioniBroj})",
+            'tip' => 'success'
+        ]);
+
         return response()->json([
             'message' => 'Vozilo uspešno dodato',
             'vehicle' => $vehicle,
@@ -101,7 +109,24 @@ class VehicleController extends Controller
 
         // Autorizacija se vrši putem middleware-a u api.php
 
+        $oldPrice = $vehicle->cenaPoDanu;
         $vehicle->update($request->all());
+
+        if ($request->has('cenaPoDanu') && $oldPrice != $vehicle->cenaPoDanu) {
+            Aktivnost::create([
+                'korisnikId' => $request->user()->id,
+                'akcija' => 'VEHICLE_PRICE_CHANGED',
+                'detalji' => "Promenjena cena za {$vehicle->marka} {$vehicle->model}: {$oldPrice}€ -> {$vehicle->cenaPoDanu}€",
+                'tip' => 'warning'
+            ]);
+        } else {
+            Aktivnost::create([
+                'korisnikId' => $request->user()->id,
+                'akcija' => 'VEHICLE_UPDATED',
+                'detalji' => "Izmenjeni podaci za vozilo: {$vehicle->marka} {$vehicle->model}",
+                'tip' => 'info'
+            ]);
+        }
 
         return response()->json([
             'message' => 'Podaci o vozilu uspešno ažurirani',
@@ -115,7 +140,15 @@ class VehicleController extends Controller
     public function destroy($id)
     {
         $vehicle = Vozilo::findOrFail($id);
+        $details = "Obrisano vozilo: {$vehicle->marka} {$vehicle->model} ({$vehicle->registracioniBroj})";
         $vehicle->delete();
+
+        Aktivnost::create([
+            'korisnikId' => auth()->user()->id,
+            'akcija' => 'VEHICLE_DELETED',
+            'detalji' => $details,
+            'tip' => 'error'
+        ]);
 
         return response()->json([
             'message' => 'Vozilo uspešno obrisano',

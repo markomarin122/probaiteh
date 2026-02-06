@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Aktivnost;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -43,6 +44,13 @@ class UserController extends Controller
         }
 
         $user->update($data);
+
+        Aktivnost::create([
+            'korisnikId' => $user->id,
+            'akcija' => 'PROFILE_UPDATED',
+            'detalji' => "Korisnik je ažurirao svoj profil.",
+            'tip' => 'info'
+        ]);
 
         return response()->json([
             'message' => 'Profil uspešno ažuriran',
@@ -96,6 +104,13 @@ class UserController extends Controller
             'telefon' => $request->telefon,
         ]);
 
+        Aktivnost::create([
+            'korisnikId' => $request->user()->id,
+            'akcija' => 'USER_CREATED',
+            'detalji' => "Kreiran novi korisnik: {$user->email} (Uloga: {$user->uloga})",
+            'tip' => 'success'
+        ]);
+
         return response()->json([
             'message' => 'Korisnik uspešno kreiran',
             'user' => $user,
@@ -138,6 +153,13 @@ class UserController extends Controller
 
             $user->update($data);
 
+            Aktivnost::create([
+                'korisnikId' => $request->user()->id,
+                'akcija' => 'USER_MANAGEMENT_UPDATE',
+                'detalji' => "Admin je izmenio podatke za korisnika: {$user->email}",
+                'tip' => 'info'
+            ]);
+
             return response()->json([
                 'message' => 'Korisnik uspešno ažuriran',
                 'user' => $user->fresh(),
@@ -166,6 +188,13 @@ class UserController extends Controller
         }
 
         $user->delete();
+
+        Aktivnost::create([
+            'korisnikId' => auth()->id(),
+            'akcija' => 'USER_DEACTIVATED',
+            'detalji' => "Deaktiviran korisnik: {$user->email}",
+            'tip' => 'error'
+        ]);
 
         return response()->json([
             'message' => 'Korisnik uspešno deaktiviran',
